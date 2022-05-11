@@ -1,0 +1,4 @@
+[build]
+  functions = "lambda"
+[[plugins]]
+  package = "netlify-plugin-inline-functions-env"
