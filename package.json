@@ -13,5 +13,8 @@
   "dependencies": {
     "netlify-lambda": "^2.0.15",
     "pg": "^8.7.3"
+  },
+  "devDependencies": {
+    "netlify-plugin-inline-functions-env": "^1.0.9"
   }
 }
