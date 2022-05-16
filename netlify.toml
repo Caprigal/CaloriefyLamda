@@ -1,4 +1,7 @@
+[settings]
+  ID = "d5f5500f-2e49-475f-b528-71971c73d983"
 [build]
-  functions = "lambda"
+  functions = "dist"
+  publish = "dist"
 [[plugins]]
   package = "netlify-plugin-inline-functions-env"

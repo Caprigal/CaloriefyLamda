@@ -13,7 +13,7 @@ exports.handler = async (event, context) => {
 
   try {
     client.connect()
-    const response = await client.query(`SELECT * FROM activities ORDER BY id ASC`)
+    const response = await client.query(`SELECT * FROM intakes ORDER BY id ASC`)
 
     client.end()
     return {

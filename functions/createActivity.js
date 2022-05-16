@@ -1,0 +1,103 @@
+const pg = require('pg')
+require('dotenv').config()
+const jwt = require('jsonwebtoken')
+const headers = {
+  'access-control-allow-methods': '*',
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+  'Access-Control-Max-Age': '2592000',
+  'Access-Control-Allow-Credentials': 'true',
+}
+
+exports.handler = async (event, context) => {
+  const client = new pg.Client(process.env.PSQL_CONN_STRING)
+  
+  /* Handle httpMethod variations and errors */
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: headers,
+    }
+  }
+
+  if (event.httpMethod !== 'POST') {
+    return { statusCode: 405, headers: headers, body: 'Method Not Allowed' }
+  }
+  /* Handle httpMethod variations and errors */
+
+  const activities = JSON.parse(event.body)
+
+  /* Token verification, get User by token */
+  if (!event.headers.authorization && !event.headers.authorization.startsWith('Bearer')) {
+    return { statusCode: 401, headers: headers, body: 'Not authorized' }
+  }
+
+  const decoded = jwt.verify(event.headers.authorization.replace('Bearer ', ''), process.env.JWT_SECRET)
+
+  try {
+    client.connect()
+
+    const response = await client.query(`SELECT * FROM users WHERE id = '${decoded.id}'`)
+    user = response.rows[0]
+  } catch (err) {
+    client.end()
+    return {
+      statusCode: 400,
+      headers: headers,
+      body: JSON.stringify('Invalid token!'),
+    }
+  }
+  /* Token verification, get User by token */
+
+  var a =
+    '(' +
+    activities
+      .map((i) => {
+        let name = i.name ? 'name, ' : ''
+        let calories = i.calories ? 'calories, ' : ''
+        let activity_time = i.activity_time ? 'activity_time, ' : ''
+        let activity_length = i.activity_length ? 'activity_length, ' : ''
+        let created_by = "created_by, "
+        let performed_at = i.performed_at ? 'performed_at' : ''
+
+        return name + calories + activity_time + activity_length + created_by + performed_at
+      })
+      .join('),(') +
+    ')'
+
+  var b =
+    '(' +
+    activities
+      .map((i) => {
+        let name = i.name ? "'" + i.name + "', " : ''
+        let calories = i.calories ? i.calories + ', ' : ''
+        let activity_time = i.activity_time ? i.activity_time + ', ' : ''
+        let activity_length = i.activity_length ? i.activity_length + ', ' : ''
+        let created_by = "'" + user.id + "', "
+        let performed_at = i.performed_at ? "'" + i.performed_at + "'" : ''
+
+        return name + calories + activity_time + activity_length + created_by + performed_at
+      })
+      .join('),(') +
+    ')'
+
+  var query = 'INSERT INTO activities ' + a + ' VALUES ' + b + ' RETURNING *'
+
+  try {
+    const response = await client.query(query)
+
+    client.end()
+    return {
+      statusCode: 200,
+      headers: headers,
+      body: JSON.stringify(response.rows),
+    }
+  } catch (err) {
+    client.end()
+    return {
+      statusCode: 400,
+      headers: headers,
+      body: JSON.stringify({ stack: err.stack, message: err.message }),
+    }
+  }
+}
