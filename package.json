@@ -19,7 +19,6 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "netlify-cli": "^10.3.1",
-    "netlify-plugin-inline-functions-env": "^1.0.9"
+    "netlify-cli": "^10.3.1"
   }
 }

@@ -3,5 +3,3 @@
 [build]
   functions = "dist"
   publish = "dist"
-[[plugins]]
-  package = "netlify-plugin-inline-functions-env"
