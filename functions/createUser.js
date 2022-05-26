@@ -18,6 +18,13 @@ exports.handler = async (event, context) => {
   let userExists
 
   /* Handle httpMethod variations and errors */
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: headers,
+    }
+  }
+
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, headers: headers, body: 'Method Not Allowed' }
   }
