@@ -1,4 +1,4 @@
 [settings]
   ID = "d5f5500f-2e49-475f-b528-71971c73d983"
 [build]
-  functions = "dist"
+  functions = "functions"
