@@ -3,9 +3,8 @@ module.exports = {
   optimization: {minimize: false},
   devtool: "source-map",
   target: "node",
-  plugins: [
-    new webpack.IgnorePlugin(/^pg-native$/),
-    // Or, for WebPack 4+:
-    new webpack.IgnorePlugin({ resourceRegExp: /^pg-native$/ })
-  ],
+  alias: {
+    'pg-native': path.join(__dirname, 'aliases/pg-native.js'),
+    'pgpass$': path.join(__dirname, 'aliases/pgpass.js'),
+  },
 }
