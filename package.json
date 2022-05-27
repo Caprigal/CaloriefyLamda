@@ -16,7 +16,6 @@
     "netlify": "^11.0.1",
     "netlify-lambda": "^2.0.15",
     "pg": "^8.7.3",
-    "pg-native": "^3.0.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
