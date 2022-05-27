@@ -1,4 +1,5 @@
-// webpack.functions.js
+const webpack = require('webpack');
+
 module.exports = {
   optimization: {minimize: false},
   devtool: "source-map",
