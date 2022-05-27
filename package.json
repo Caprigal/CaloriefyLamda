@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "lambda-build": "netlify-lambda build lambda",
-    "lambda-serve": "netlify-lambda serve lambda --config webpack.config.js"
+    "build": "netlify-lambda build lambda",
+    "serve": "netlify-lambda serve lambda --config webpack.config.js"
   },
   "keywords": [],
   "author": "",
