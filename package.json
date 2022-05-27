@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "netlify-lambda build lambda",
+    "build": "netlify-lambda build lambda ; webpack --mode=production",
     "serve": "netlify-lambda serve lambda --config webpack.config.js"
   },
   "keywords": [],
@@ -16,7 +16,8 @@
     "netlify": "^11.0.1",
     "netlify-lambda": "^2.0.15",
     "pg": "^8.7.3",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "webpack-cli": "^4.9.2"
   },
   "devDependencies": {
     "netlify-cli": "^10.3.1"
