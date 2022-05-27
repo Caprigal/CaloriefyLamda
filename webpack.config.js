@@ -1,4 +1,4 @@
-const webpack = require('webpack')
+const { IgnorePlugin } = require('webpack');
 
 module.exports = {
   optimization: { minimize: false },
