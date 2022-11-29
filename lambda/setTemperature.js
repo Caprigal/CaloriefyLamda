@@ -26,7 +26,7 @@ exports.handler = async (event, context) => {
   try {
     client.connect()
 
-    const response = await client.query(`UPDATE home SET temperature='${event.queryStringParameters.t}' WHERE id='c01217ba-d6e5-4d88-93df-8bb9ff64c03e'`)
+    const response = await client.query(`UPDATE home SET temperature='${event.queryStringParameters.t}', temperature_update_t='${new Date().toDateString() + ' ' + new Date().toLocaleTimeString()}' WHERE id='c01217ba-d6e5-4d88-93df-8bb9ff64c03e'`)
 
     client.end()
     return {
